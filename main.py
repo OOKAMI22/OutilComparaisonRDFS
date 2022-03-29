@@ -106,7 +106,7 @@ while True:
             initialiseurF["numSimilarity"] = 0
         if values['NgramC'] == True:
             initialiseurF["ngram1"] = float(values['5'])
-            initialiseurF["ngram2"] = float(values['5-2'])
+            initialiseurF["ngram2"] = int(values['5-2'])
         else:
             initialiseurF["ngram1"] = 0
             initialiseurF["ngram2"] = 0

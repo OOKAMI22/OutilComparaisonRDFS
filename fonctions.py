@@ -82,13 +82,15 @@ def getPropriete(propriete, expression, graphe):
     return resultat
 
 
-# Fonctions de pretement pour les URI afin de pas biaser le calcul
+# Fonctions de pretraiment pour les URI afin de ne pas biaser le calcul
 def tokenisationURL(url):
     token = url.split("/")[-2:]
     return token
+
+
 def pretraitementURL(url):
     token = tokenisationURL(url)
-    resultat = str(token[0] + token[1])
+    resultat = "".join(token)
     return resultat
 
 
@@ -110,45 +112,55 @@ def jaro(str1, str2):
 
 
 def jaroWrinkler(str1, str2):
-    return psm.JaroWinkler().get_sim_score(str1, str2)
+    if (len(str1) == 0 or len(str2) == 0):
+        return 0.0
+    else:
+        return psm.JaroWinkler().get_sim_score(str1, str2)
 
 
 def Jaccard(str1, str2):
-    str1 = tokenisationURL(str1)
-    str2 = tokenisationURL(str2)
-    return Jaccard().get_sim_score(str1, str2)
+    if (len(str1) == 0 or len(str2) == 0):
+        return 0.0
+    else:
+        str1 = tokenisationURL(str1)
+        str2 = tokenisationURL(str2)
+        return psm.Jaccard().get_sim_score(str1, str2)
+
 
 def Ngram(s1, s2, s):
     s1 = pretraitementURL(s1)
     s2 = pretraitementURL(s2)
-    print(s1)
-    print(s2)
+
     i = 0
     id = 0
     while ((i + s) <= len(s1)) or ((i + s) <= len(s2)):
-        print(s1[i:i + s], " == ", s2[i:i + s] + "     ?")
+        # print(s1[i:i + s], " == ", s2[i:i + s] + "     ?")
         if s1[i:i + s] == s2[i:i + s]:
-            print("OUI")
+            # print("OUI")
             id += 1
         i += 1
     if ((min(len(s1), len(s2)) - s) < 0):
-        print("trop grand")
+        # print("trop grand")
         return 0
     return (id) / (min(len(s2), len(s1)) - s + 1)
 
 
 def mongeElkan(str1, str2):
-    str1 = pretraitementURL(str1)
-    str2 = pretraitementURL(str2)
-    str1 = [str1]
-    str2 = [str2]
-    return psm.MongeElkan().get_raw_score(str1, str2)
+    if (len(str1) == 0 or len(str2) == 0):
+        return 0.0
+    else:
+        str1 = tokenisationURL(str1)
+        str2 = tokenisationURL(str2)
+        return psm.MongeElkan().get_raw_score(str1, str2)
 
 
 def levenshtein(str1, str2):
-    str1 = pretraitementURL(str1)
-    str2 = pretraitementURL(str2)
-    return psm.Levenshtein().get_sim_score(str1, str2)
+    if (len(str1) == 0 or len(str2) == 0):
+        return 0.0
+    else:
+        str1 = pretraitementURL(str1)
+        str2 = pretraitementURL(str2)
+        return psm.Levenshtein().get_sim_score(str1, str2)
 
 
 def numSimilarity(num1, num2):
@@ -161,7 +173,9 @@ def numSimilarity(num1, num2):
 
 
 def uriEquality(uri1, uri2):
-    if (uri1 == uri2):
+    if (len(uri1) == 0 or len(uri2) == 0):
+        return 0.0
+    elif (pretraitementURL(uri1) == pretraitementURL(uri2)):
         return 1.0
     else:
         return 0.0
@@ -191,7 +205,7 @@ def compareNgram(l1, l2, n, fonction):
         for elem2 in l2:
             print(elem1, elem2)
             somme.append(fonction(str(elem1), str(elem2), n))
-    # print(min(somme))
+    print(min(somme))
     return max(somme)
 
 
@@ -256,7 +270,7 @@ def compareExpressions(g1, g2, clef, titre, genre, opus, note, compositeur, jaro
     expressions2 = getExpressions(g2)
 
     for exp1 in expressions1:
-        print("Expression 1 : " + str(exp1))
+        print("Expression  : " + str(exp1))
         for exp2 in expressions2:
             somme = 0
             nombre = 0
