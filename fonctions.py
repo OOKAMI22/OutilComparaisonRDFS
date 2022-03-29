@@ -83,8 +83,11 @@ def getPropriete(propriete, expression, graphe):
 
 
 # Fonctions de pretement pour les URI afin de pas biaser le calcul
-def pretraitementURL(url):
+def tokenisationURL(url):
     token = url.split("/")[-2:]
+    return token
+def pretraitementURL(url):
+    token = tokenisationURL(url)
     resultat = str(token[0] + token[1])
     return resultat
 
@@ -111,23 +114,9 @@ def jaroWrinkler(str1, str2):
 
 
 def Jaccard(str1, str2):
-    token1 = str1.split("/")[-2:]
-    token2 = str2.split("/")[-2:]
-
-    tmp1 = token1[1].split("-")
-    tmp2 = token2[1].split("-")
-
-    tmp1.insert(0, token1[0])
-    tmp2.insert(0, token2[0])
-
-    set1 = set(tmp1)
-    set2 = set(tmp2)
-    intersection = list(set1 & set2)
-    union = list(set1 | set2)
-    # print(intersection)
-    # print(union)
-    return len(intersection) / len(union)
-
+    str1 = tokenisationURL(str1)
+    str2 = tokenisationURL(str2)
+    return Jaccard().get_sim_score(str1, str2)
 
 def Ngram(s1, s2, s):
     s1 = pretraitementURL(s1)
@@ -192,7 +181,7 @@ def compare(l1, l2, fonction):
         for elem2 in l2:
             print(elem1, elem2)
             somme.append(fonction(str(elem1), str(elem2)))
-    # print(min(somme))
+    print(min(somme))
     return max(somme)
 
 
@@ -261,7 +250,7 @@ def openFile(fileName):
 
 
 def compareExpressions(g1, g2, clef, titre, genre, opus, note, compositeur, jaro1, jaroWrinkler1, numSimilarity1,
-                       uriEquality1, ngram1, ngram2, jaccard1, , monge_elkan1, levenshtein1, seuil):
+                       uriEquality1, ngram1, ngram2, jaccard1, monge_elkan1, levenshtein1, seuil):
     expressions1 = getExpressions(g1)
 
     expressions2 = getExpressions(g2)
