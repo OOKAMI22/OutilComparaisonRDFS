@@ -83,13 +83,25 @@ def getPropriete(propriete, expression, graphe):
 
 
 # Fonctions de pretraiment pour les URI afin de ne pas biaser le calcul
-def tokenisationURL(url):
-    token = url.split("/")[-2:]
-    return token
+def isURL(str):
+    return str.startswith("http")
+
+
+def tokenisation(str):
+    if (type(str) == list):
+        token = []
+        for elem in str:
+            token = list(set(token) | set(elem.split(" ")))
+        return token
+    elif (isURL(str)):
+        token = str.split("/")[-2:]
+        return token
+    else:
+        return str.split(" ")
 
 
 def pretraitementURL(url):
-    token = tokenisationURL(url)
+    token = tokenisation(url)
     resultat = "".join(token)
     return resultat
 
@@ -122,15 +134,18 @@ def Jaccard(str1, str2):
     if (len(str1) == 0 or len(str2) == 0):
         return 0.0
     else:
-        str1 = tokenisationURL(str1)
-        str2 = tokenisationURL(str2)
+        str1 = tokenisation(str1)
+        str2 = tokenisation(str2)
+        print(str1)
+        print(str2)
         return psm.Jaccard().get_sim_score(str1, str2)
 
 
 def Ngram(s1, s2, s):
     s1 = pretraitementURL(s1)
     s2 = pretraitementURL(s2)
-
+    print(s1)
+    print(s2)
     i = 0
     id = 0
     while ((i + s) <= len(s1)) or ((i + s) <= len(s2)):
@@ -149,8 +164,8 @@ def mongeElkan(str1, str2):
     if (len(str1) == 0 or len(str2) == 0):
         return 0.0
     else:
-        str1 = tokenisationURL(str1)
-        str2 = tokenisationURL(str2)
+        str1 = tokenisation(str1)
+        str2 = tokenisation(str2)
         return psm.MongeElkan().get_raw_score(str1, str2)
 
 
@@ -194,7 +209,7 @@ def compare(l1, l2, fonction):
     for elem1 in l1:
         for elem2 in l2:
             print(elem1, elem2)
-            somme.append(fonction(str(elem1), str(elem2)))
+            somme.append(fonction(elem1, elem2))
     print(min(somme))
     return max(somme)
 
