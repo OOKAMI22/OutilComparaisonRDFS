@@ -1,7 +1,7 @@
 def recall():
     counter = 0
-    input1 = open("Silk_key_jaro_4.nt", "r")
-    input2 = open("ClefJaro4.ttl", "r")
+    input1 = open("Silk_title_jaccar_10.nt", "r")
+    input2 = open("TitreJaccard10.ttl", "r")
     results_found = input1.readlines()
     true_results_found = set(input2.readlines())
     total = len(true_results_found)
@@ -15,8 +15,8 @@ def recall():
 
 def precision():
     counter = 0
-    input1 = open("Silk_key_jaro_4.nt", "r")
-    input2 = open("ClefJaro4.ttl", "r")
+    input1 = open("Silk_title_jaccar_10.nt", "r")
+    input2 = open("TitreJaccard10.ttl", "r")
     results_found = input1.readlines()
     true_results_found = set(input2.readlines())
     total = len(results_found)
