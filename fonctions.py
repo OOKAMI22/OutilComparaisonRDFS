@@ -120,13 +120,18 @@ def jaro(str1, str2):
     if (len(str1) == 0 or len(str2) == 0):
         return 0.0
     else:
+        str1 = pretraitementURL(str1)
+        str2 = pretraitementURL(str2)
         return psm.Jaro().get_sim_score(str(str1), str(str2))
 
 
 def jaroWrinkler(str1, str2):
+
     if (len(str1) == 0 or len(str2) == 0):
         return 0.0
     else:
+        str1 = pretraitementURL(str1)
+        str2 = pretraitementURL(str2)
         return psm.JaroWinkler().get_sim_score(str1, str2)
 
 
