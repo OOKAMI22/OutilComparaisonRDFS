@@ -1,4 +1,3 @@
-import psm as psm
 from rdflib import *
 from rdflib import *
 import SPARQLWrapper

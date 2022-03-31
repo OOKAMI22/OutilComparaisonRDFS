@@ -32,7 +32,7 @@ def main():
                sg.T("                                      "), sg.Checkbox('Jaro', default=False, key="JaroC"),
                sg.T("              "), sg.InputText(key='1')],
               [sg.T("                   "), sg.Checkbox('Titre', default=False, key="TitreC"),
-               sg.T("                                      "), sg.Checkbox('Jaccar', default=False, key="JaccarC"),
+               sg.T("                                      "), sg.Checkbox('Jaccard', default=False, key="JaccarC"),
                sg.T("          "), sg.InputText(key='2')],
               [sg.T("                   "), sg.Checkbox('Note', default=False, key="NoteC"),
                sg.T("                                     "), sg.Checkbox('Monge Elkan', default=False, key="MongeC"),
