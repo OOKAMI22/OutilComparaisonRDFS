@@ -1,0 +1,70 @@
+
+<Silk>
+
+	<!-- PREFIXES -->
+	<Prefixes>
+	  <Prefix id="ecrm" namespace="http://erlangen-crm.org/current/" />
+	  <Prefix id="xsd" namespace="http://www.w3.org/2001/XMLSchema#" />
+	  <Prefix id="efrbroo" namespace="http://erlangen-crm.org/efrbroo/" />
+	  <Prefix id="dcterms" namespace="http://purl.org/dc/terms/" />
+	  <Prefix id="mus" namespace="http://data.doremus.org/ontology#" />
+	  <Prefix id="rdf" namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+	  <Prefix id="owl" namespace="http://www.w3.org/2002/07/owl#"/>
+
+	</Prefixes>
+
+
+	<!--Datasource definitions -->
+	<DataSources>
+	  	<DataSource id="source" type="file">
+			<Param name="file" value="../TP2data/source.ttl" />
+			<Param name="format" value="TURTLE" />
+		</DataSource>
+
+		<DataSource id="target" type="file">
+			<Param name="file" value="../TP2data/target.ttl" />
+			<Param name="format" value="TURTLE" />
+		</DataSource>
+
+	</DataSources>
+
+	  <Interlinks>
+
+	  	<Interlink id="expression">
+      		<LinkType>owl:sameAs</LinkType>
+
+		    <SourceDataset dataSource="source" var="x">
+		        <RestrictTo>
+		          ?x a efrbroo:F22_Self-Contained_Expression
+		        </RestrictTo>
+		    </SourceDataset>
+
+		    <TargetDataset dataSource="target" var="y">
+		        <RestrictTo>
+		          ?y a efrbroo:F22_Self-Contained_Expression
+		        </RestrictTo>
+		    </TargetDataset>
+		    <LinkageRule linkType="owl:sameAs">
+		      	<Aggregate type="average">
+		                  <Compare metric="levenshtein" threshold="0">
+					            <Input path="?x/mus:U11_has_key " />
+					            <Input path="?y/mus:U11_has_key " />
+          				</Compare>
+       		 	</Aggregate>
+		    </LinkageRule>
+
+    </Interlink>
+
+
+  </Interlinks>
+
+  	      <Outputs>
+
+	        <Dataset id="source" type="file">
+	          <Param name="file" value="output.nt" />
+	          <Param name="format" value="N-TRIPLE" />
+	        </Dataset>
+
+      	</Outputs>
+
+</Silk>

@@ -266,7 +266,7 @@ def compareProriete(exp1, exp2, g1, g2, proprieteStr, jaro1, jaroWrinkler1, numS
 
 # fonction qui ecrit sur le fichier de sortie les resultats de la comparaison
 def createFile(fileName, exp1, exp2):
-    content = "<" + str(exp1) + "> owl:sameAs <" + str(exp2) + "> .\n"
+    content = "<" + str(exp1) + "> <http://www.w3.org/2002/07/owl#sameAs> <" + str(exp2) + "> .\n"
     with open(fileName, "a") as f:
         f.write(content)
         f.close()
